@@ -1,19 +1,28 @@
 import React from 'react';
 import {Card, Grid, Typography, Button} from '@material-ui/core';
+import {withRouter} from 'react-router-dom';
 
-const Moviesresults = ({Title, Year, Type, imdbID, Poster}) =>{
-   
+import style from './style';
+
+const Moviesresults = ({Title, Year, Type, imdbID, Poster, history}) =>{
+   const classes = style();
+
+   const handleSeeMovieClick = () => {
+    history.push(`/movie/${imdbID}`);
+   };
+
+
    return(
-   <Card>
+   <Card className={classes.cardContainer} >
         <Grid container>
         <Grid item>
-                <img src={Poster} alt={Title} />
+                <img src={Poster} alt={Title} className={classes.poster}/>
         </Grid>
-        <Grid item>
+        <Grid item className={classes.titlesContainer}>
             <Typography>{Title}</Typography>
             <Typography>{Year}</Typography>
             <Typography>{Type}</Typography>
-            <Button color="primary" variant="contained">Ver mas</Button>
+            <Button color="primary" variant="contained" onClick={handleSeeMovieClick}>Ver mas</Button>
 
         </Grid>
 
@@ -23,4 +32,4 @@ const Moviesresults = ({Title, Year, Type, imdbID, Poster}) =>{
    );
 }
 
-export default Moviesresults;
+export default withRouter(Moviesresults);
