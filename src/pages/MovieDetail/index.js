@@ -9,19 +9,24 @@ export default ({match}) => {
   
     const dispatch = useDispatch();
     const movieResult = useSelector(state => movieResultSelector(state));
+    
     console.log(movieResult);
     useEffect (() =>{
         const movieId = match.params.id;
-        if ( !movieResult){
+        if ( !movieResult || movieResult && movieResult.imdbID !== match.params.id){
         dispatch(searchMovieById({movieId}));
         }
-        if (!movieResult) {
-            <CircularProgress sise={100} color="primary" />;
-        }
+       
 
     });
+    if (!movieResult) {
+        return <CircularProgress sise={100} color="primary" />;
+     }
+
     return (
+        
         <Container>
+            
            <Typography variant='h3' >
                {movieResult.Title}
            </Typography>
